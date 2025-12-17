@@ -21,11 +21,19 @@ COUNTRY_TO_GEO = {"DK": "DK"}
 
 
 def supabase_get_keywords(limit=5):
-    # Start small to avoid Google Trends rate limiting
-    url = f"{SUPABASE_URL}/rest/v1/keywords?select=keyword,topic,country&limit={limit}"
+    # Hent flere end vi bruger
+    url = f"{SUPABASE_URL}/rest/v1/keywords?select=keyword,topic,country&limit=30"
     r = requests.get(url, headers=HEADERS, timeout=30)
     r.raise_for_status()
-    return r.json()
+
+    keywords = r.json()
+
+    # Bland rækkefølgen så vi ikke altid rammer de samme
+    random.shuffle(keywords)
+
+    # Returnér kun det antal vi vil bruge i dette run
+    return keywords[:limit]
+
 
 def supabase_upsert_trends(rows):
     if not rows:
