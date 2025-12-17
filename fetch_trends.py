@@ -104,7 +104,8 @@ def main():
             print(f"FAILED keyword '{keyword}': {type(e).__name__}: {e}")
 
         # Always slow down between keywords to reduce 429s
-        time.sleep(20 + random.randint(0, 10))
+        time.sleep(35 + random.randint(0, 15))
+
 
     print(f"DONE. Total rows upserted: {total_upserted}. Failures: {failures}")
 
