@@ -27,11 +27,10 @@ def supabase_get_keywords(limit=5):
     r.raise_for_status()
     return r.json()
 
-
 def supabase_upsert_trends(rows):
     if not rows:
         return
-    url = f"{SUPABASE_URL}/rest/v1/trends"
+    url = f"{SUPABASE_URL}/rest/v1/trends?on_conflict=keyword,date"
     r = requests.post(url, headers=HEADERS, json=rows, timeout=30)
     if r.status_code not in (200, 201, 204):
         raise RuntimeError(f"Upsert failed: {r.status_code} {r.text}")
