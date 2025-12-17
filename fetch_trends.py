@@ -1,1 +1,1 @@
-.github/workflows/daily.yml
+print("Hello from fetch_trends.py")
